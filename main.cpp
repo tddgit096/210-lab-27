@@ -7,27 +7,20 @@
 #include <cctype>
 using namespace std;
 
-int MAXFRIENDSHIP = 10; int MINFRIENDSHIP = 0; int TOTALSTATS = 3;
+int MAXFRIENDSHIP = 10; int MINFRIENDSHIP = 0;
 
 void displayVillagerStats(tuple<int,string,string>);
 void displayAll(map<string, tuple<int,string,string>>);
 void increaseFriendship(tuple<int,string,string> &v, int val); //takes negative as well
-tuple<int,string,string> *searchForVillager(map<string, tuple<int,string,string>> m,string key);
-
 
 int main() {
     // declarations
     map<string, tuple<int,string,string>> villagerStats;
 
     // insert elements into the map
-    // note how the right-hand side of the assignment are the vector elements
     villagerStats["Audie"] = {3, "Hummingbird", "Get a load of this."};
     villagerStats["Raymond"] = {5, "Whale", "Why the hurry?"};
     villagerStats.insert({"Marshal", {7, "Ape", "What's for dinner?"}});
-    //debug code
-    //tuple<int,string,string> *temp = searchForVillager(villagerStats, "Audie");
-    //displayVillagerStats(*temp);
-
 
     //Menu:
     while(true){
@@ -46,6 +39,7 @@ int main() {
             cout<<"Villager Name: ";
             string name;
             cin>>name;
+            name[0] = toupper(name[0]);
             cout<<"Friendship Level: ";
             int friendship;
             cin>>friendship;
@@ -58,6 +52,21 @@ int main() {
             tuple<int,string,string> v = {friendship, species, catchphrase};
             villagerStats.insert(make_pair(name, v));
             cout<< name <<" added."<<endl;
+            break;
+        }
+        case 2:{
+            cout<<"Enter villager to delete by name: "<<endl;
+            string input;
+            cin>>input;
+            input[0] = toupper(input[0]);
+            auto it = villagerStats.find(input);
+            if (it == villagerStats.end()){
+                cout<<"Villager not found. Returning to Main Menu.\n";
+                break;
+            }
+            villagerStats.erase(it);
+            cout<< input <<" deleted.\n";
+            break;
         }
         case 3: //case 1 and 2 work the same way, but I use a ternary operator to make slight adjustments whether we are decreasing or increasing friendship.
         case 4: {//Increase or decrease friendship
@@ -78,7 +87,7 @@ int main() {
             cout<<input<<"'s friendship changed to "<<get<0>(it->second)<<endl;
             break; 
         }
-        case 3:{
+        case 5:{
             cout<<"Enter villager to search by name: "<<endl;
             string input;
             cin>>input;
@@ -98,17 +107,8 @@ int main() {
         }
         }
     displayAll(villagerStats);
-    } 
-/**/
-/*
-    // delete an element
-    villagerStats.erase("Raymond");
-
-    // report size, clear, report size again to confirm map operations
-    cout << "\nSize before clear: " << villagerStats.size() << endl;
-    villagerStats.clear();
-    cout << "Size after clear: " << villagerStats.size() << endl;
-*/
+    option = 0;
+    }
     return 0;
 }
 
@@ -127,17 +127,6 @@ void displayAll(map<string, tuple<int,string,string>> m){
     }
     cout<<"=======================================================\n";
 }
-/*
-tuple<int,string,string> *searchForVillager(map<string, tuple<int,string,string>> m,string key){
-    auto it = m.find(key);
-    if (it != m.end()) {  // the iterator points to beyond the end of the map if key is not found
-        tuple<int,string,string> *itptr = &(it->second);
-        return itptr;
-
-    } else
-        cout << endl << key << " not found." << endl;
-        return nullptr;
-}*/
 
 void increaseFriendship(tuple<int,string,string> &v, int val){//takes negative as well
     get<0>(v) += val;
