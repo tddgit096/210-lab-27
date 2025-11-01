@@ -24,7 +24,7 @@ int main() {
     villagerStats["Raymond"] = {5, "Whale", "Why the hurry?"};
     villagerStats.insert({"Marshal", {7, "Ape", "What's for dinner?"}});
     
-    cout<<searchForVillager(villagerStats, "Audie");
+    displayVillagerStats(searchForVillager(villagerStats, "Audie"));
 
 /*
     //Menu:
@@ -89,7 +89,7 @@ void displayAll(map<string, tuple<int,string,string>> m){
 tuple<int,string,string> *searchForVillager(map<string, tuple<int,string,string>> m,string key){
     auto it = m.find(key);
     if (it != m.end()) {  // the iterator points to beyond the end of the map if key is not found
-        tuple<int,string,string> *itptr = it->second;
+        tuple<int,string,string> *itptr = &(it->second);
         return itptr;
 
     } else
