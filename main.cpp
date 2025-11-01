@@ -6,7 +6,7 @@
 #include <tuple>
 using namespace std;
 
-int MAXFRIENDSHIP = 10;
+int MAXFRIENDSHIP = 10; int TOTALSTATS = 3;
 
 int main() {
     // declarations
@@ -23,8 +23,9 @@ int main() {
     cout << "Villagers and their stats:" << endl;
     for (auto pair : villagerStats) {
         cout << pair.first << ": ";
-        for (map<string, tuple<int,string,string>>::iterator it = villagerStats.begin(); it != villagerStats.end(); ++it)
-            cout << it->second << " ";
+        for(int i=0;i<TOTALSTATS;i++){
+            cout << get<i>(pair.second) << " ";
+        }
         cout << endl;
     }
 /*
