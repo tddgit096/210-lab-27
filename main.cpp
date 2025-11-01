@@ -6,9 +6,12 @@
 #include <tuple>
 using namespace std;
 
-int MAXFRIENDSHIP = 10; int TOTALSTATS = 3;
+int MAXFRIENDSHIP = 10; int MINFRIENDSHIP = 0; int TOTALSTATS = 3;
 
 void displayVillagerStats(tuple<int,string,string>);
+void displayAll(map<string, tuple<int,string,string>>);
+void increaseFriendship(); //takes negative as well
+void searchForVillager();
 
 int main() {
     // declarations
@@ -19,24 +22,6 @@ int main() {
     villagerStats["Audie"] = {3, "Hummingbird", "Get a load of this."};
     villagerStats["Raymond"] = {5, "Whale", "Why the hurry?"};
     villagerStats.insert({"Marshal", {7, "Ape", "What's for dinner?"}});
-
-
-    // Display all villagers
-    cout << "Villagers and their stats:" << endl;
-    for (auto pair : villagerStats) {
-        auto[friendship, species, phrase]=pair.second;
-        cout << pair.first << " [";
-        displayVillagerStats(pair.second);
-    }
-
-    // access the map using iterators
-    cout << "Villagers and their stats:" << endl;
-    for (map<string, tuple<int,string,string>>::iterator it = villagerStats.begin(); 
-                                               it != villagerStats.end(); ++it) {
-        auto[friendship, species, phrase]=it->second;
-        cout << it->first << " [";
-        displayVillagerStats(it->second);
-    }
 
     // delete an element
     villagerStats.erase("Raymond");
@@ -65,3 +50,25 @@ void displayVillagerStats(tuple<int,string,string> v){
     auto[friendship, species, phrase]=v;
     cout<<friendship<<", "<<species<<", "<<phrase <<"]\n";
 }
+
+void displayAll(map<string, tuple<int,string,string>> m){
+    cout << "Villagers and their stats:" << endl;
+    for (auto pair : m) {
+        auto[friendship, species, phrase]=pair.second;
+        cout << pair.first << " [";
+        displayVillagerStats(pair.second);
+    }
+}
+
+void searchForVillager();
+
+
+void increaseFriendship(tuple<int,string,string> v, int val){//takes negative as well
+    get<0>(v) += val;
+    //clamp values
+    if(get<0>(v)>MAXFRIENDSHIP)
+        get<0>(v) = MAXFRIENDSHIP;
+    else if(get<0>(v)<MINFRIENDSHIP)
+        get<0>(v) = MINFRIENDSHIP;
+} 
+
