@@ -39,27 +39,37 @@ int main() {
         if(option == 4)
             break;
         switch (option){
-        case 1: //Increase friendship
-            cout<<"Choose villager by name to increase their friendship\n";   //prompt to choose villager by name
+        case 1:
+        case 2: {//Increase or decrease friendship
+            cout<<"Choose villager by name to " << ((option == 1)? "increase" : "decrease") << " their friendship\n";   //prompt to choose villager by name
             displayAll(villagerStats);//display villagers
             string input;
             cin>>input;
             auto it = villagerStats.find(input);
-            if (it == villagerStats.end())
-                cout<<"Returning to Main Menu.\n";break;
+            if (it == villagerStats.end()){
+                cout<<"Returning to Main Menu.\n";
+                break;
+            }
             cout<<"Increase Friendship by how much ["<<MINFRIENDSHIP<<"-"<<MAXFRIENDSHIP<<"]: ";
             int value;
+            cin>>value;
             increaseFriendship(it->second, value); //run it through the friendship increaser
-            break;
-        case 2:
-            
-            break;
-        case 3:
-            
-            break;
-        default:
+            displayVillagerStats(it->second);
             break;
         }
+        {
+            
+            break;
+        }
+        case 3:{
+            
+            break;
+        }
+        default:{
+            break;
+        }
+        } 
+    } 
 /**/
 /*
     // delete an element
