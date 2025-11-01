@@ -11,7 +11,7 @@ int MAXFRIENDSHIP = 10; int MINFRIENDSHIP = 0; int TOTALSTATS = 3;
 void displayVillagerStats(tuple<int,string,string>);
 void displayAll(map<string, tuple<int,string,string>>);
 void increaseFriendship(tuple<int,string,string> &v, int val); //takes negative as well
-tuple<int,string,string> searchForVillager();
+tuple<int,string,string> *searchForVillager(map<string, tuple<int,string,string>> m,string key);
 
 
 int main() {
@@ -31,8 +31,34 @@ int main() {
         cout<<"2. Decrease Friendship\n";
         cout<<"3. Search for Villager\n";
         cout<<"4. Exit\n";
-        cin>>input
-    }
+        cin>>input;
+        if(input == 4)
+            break;
+        switch (input)
+        {
+        case 1: //Increase friendship
+            cout<<"Choose villager by name to increase their friendship\n";   //prompt to choose villager by name
+            displayAll(villagerStats);//display villagers
+            string input;
+            cin>>input;
+            tuple<int,string,string> *tempVillager = searchForVillager(villagerStats, input);
+            if(tempVillager==nullptr)//is it valid?
+                cout<<"Returning to Main Menu.\n";break;
+            cout<<"Increase Friendship by how much ["<<MINFRIENDSHIP<<"-"<<MAXFRIENDSHIP<<"]: ";
+            int value;
+            increaseFriendship(searchForVillager(villagerStats, input), value);
+            //if it is, run it through the friendship increaser
+
+            break;
+        case 2:
+            /* code */
+            break;
+        case 3:
+            /* code */
+            break;
+        default:
+            break;
+        }
 
 /*
     // delete an element
@@ -60,12 +86,13 @@ void displayAll(map<string, tuple<int,string,string>> m){
     }
 }
 
-tuple<int,string,string> searchForVillager(map<string, tuple<int,string,string>> m,string key){
+tuple<int,string,string> *searchForVillager(map<string, tuple<int,string,string>> m,string key){
     auto it = m.find(key);
     if (it != m.end()) {  // the iterator points to beyond the end of the map if key is not found
         return it->second;
     } else
         cout << endl << key << " not found." << endl;
+        return nullptr;
 }
 
 void increaseFriendship(tuple<int,string,string> &v, int val){//takes negative as well
