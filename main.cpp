@@ -19,27 +19,24 @@ int main() {
     villagerStats.insert({"Marshal", {7, "Ape", "What's for dinner?"}});
 
 
-    // access the map using a range-based for loop
+    // Display all villagers
     cout << "Villagers and their stats:" << endl;
     for (auto pair : villagerStats) {
-        cout << pair.first << ": ";
-        for(int i=0;i<TOTALSTATS;i++){
-            cout << get<i>(pair.second) << " ";
-        }
+        auto[friendship, species, phrase]=pair.second;
+        cout << pair.first << " [";
+        cout<<friendship<<" "<<species<<" "<<phrase <<"]\n";
+    }
+
+    // access the map using iterators
+    cout << "Villagers and their stats:" << endl;
+    for (map<string, tuple<int,string,string>>::iterator it = villagerStats.begin(); 
+                                               it != villagerStats.end(); ++it) {
+        cout << it->first << ": ";
+        cout << get<0>it->second;
+
         cout << endl;
     }
 /*
-    // access the map using iterators
-    cout << "\nVillagers and their favorite colors (iterators):" << endl;
-    for (map<string, vector<string>>::iterator it = villagerStats.begin(); 
-                                               it != villagerStats.end(); ++it) {
-        cout << it->first << ": ";
-        for (auto color : it->second) {
-            cout << color << " ";
-        }
-        cout << endl;
-    }
-
     // delete an element
     villagerStats.erase("Raymond");
 
