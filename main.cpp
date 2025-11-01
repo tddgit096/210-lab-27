@@ -23,19 +23,21 @@ int main() {
     villagerStats["Audie"] = {3, "Hummingbird", "Get a load of this."};
     villagerStats["Raymond"] = {5, "Whale", "Why the hurry?"};
     villagerStats.insert({"Marshal", {7, "Ape", "What's for dinner?"}});
+    
+    cout<<searchForVillager(villagerStats, "Audie");
 
+/*
     //Menu:
     while(true){
-        int input;
+        int option;
         cout<<"1. Increase Friendship\n";
         cout<<"2. Decrease Friendship\n";
         cout<<"3. Search for Villager\n";
         cout<<"4. Exit\n";
-        cin>>input;
-        if(input == 4)
+        cin>>option;
+        if(option == 4)
             break;
-        switch (input)
-        {
+        switch (option){
         case 1: //Increase friendship
             cout<<"Choose villager by name to increase their friendship\n";   //prompt to choose villager by name
             displayAll(villagerStats);//display villagers
@@ -46,20 +48,18 @@ int main() {
                 cout<<"Returning to Main Menu.\n";break;
             cout<<"Increase Friendship by how much ["<<MINFRIENDSHIP<<"-"<<MAXFRIENDSHIP<<"]: ";
             int value;
-            increaseFriendship(searchForVillager(villagerStats, input), value);
-            //if it is, run it through the friendship increaser
-
+            increaseFriendship(searchForVillager(villagerStats, input), value); //run it through the friendship increaser
             break;
         case 2:
-            /* code */
+            
             break;
         case 3:
-            /* code */
+            
             break;
         default:
             break;
         }
-
+*/
 /*
     // delete an element
     villagerStats.erase("Raymond");
@@ -89,7 +89,9 @@ void displayAll(map<string, tuple<int,string,string>> m){
 tuple<int,string,string> *searchForVillager(map<string, tuple<int,string,string>> m,string key){
     auto it = m.find(key);
     if (it != m.end()) {  // the iterator points to beyond the end of the map if key is not found
-        return it->second;
+        tuple<int,string,string> *itptr = it->second;
+        return itptr;
+
     } else
         cout << endl << key << " not found." << endl;
         return nullptr;
