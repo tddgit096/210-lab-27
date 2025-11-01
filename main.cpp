@@ -8,6 +8,8 @@ using namespace std;
 
 int MAXFRIENDSHIP = 10; int TOTALSTATS = 3;
 
+void displayVillagerStats(tuple<int,string,string>);
+
 int main() {
     // declarations
     map<string, tuple<int,string,string>> villagerStats;
@@ -24,19 +26,18 @@ int main() {
     for (auto pair : villagerStats) {
         auto[friendship, species, phrase]=pair.second;
         cout << pair.first << " [";
-        cout<<friendship<<" "<<species<<" "<<phrase <<"]\n";
+        displayVillagerStats(pair.second);
     }
 
     // access the map using iterators
     cout << "Villagers and their stats:" << endl;
     for (map<string, tuple<int,string,string>>::iterator it = villagerStats.begin(); 
                                                it != villagerStats.end(); ++it) {
-        cout << it->first << ": ";
-        cout << get<0>it->second;
-
-        cout << endl;
+        auto[friendship, species, phrase]=it->second;
+        cout << it->first << " [";
+        displayVillagerStats(it->second);
     }
-/*
+
     // delete an element
     villagerStats.erase("Raymond");
 
@@ -45,9 +46,9 @@ int main() {
     auto it = villagerStats.find(searchKey);
     if (it != villagerStats.end()) {  // the iterator points to beyond the end of the map
                                        // if searchKey is not found
-        cout << "\nFound " << searchKey << "'s favorite colors: ";
-        for (auto color : it->second)  // range loop to traverse the value/vector
-            cout << color << " ";
+        cout << "\nFound " << searchKey << "'s stats: [";
+        auto[friendship, species, phrase]=it->second;
+        displayVillagerStats(it->second);
         cout << endl;
     } else
         cout << endl << searchKey << " not found." << endl;
@@ -56,6 +57,11 @@ int main() {
     cout << "\nSize before clear: " << villagerStats.size() << endl;
     villagerStats.clear();
     cout << "Size after clear: " << villagerStats.size() << endl;
-*/
+
     return 0;
+}
+
+void displayVillagerStats(tuple<int,string,string> v){
+    auto[friendship, species, phrase]=v;
+    cout<<friendship<<", "<<species<<", "<<phrase <<"]\n";
 }
