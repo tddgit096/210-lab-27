@@ -23,10 +23,11 @@ int main() {
     villagerStats["Audie"] = {3, "Hummingbird", "Get a load of this."};
     villagerStats["Raymond"] = {5, "Whale", "Why the hurry?"};
     villagerStats.insert({"Marshal", {7, "Ape", "What's for dinner?"}});
-    
-    displayVillagerStats(searchForVillager(villagerStats, "Audie"));
+    //debug code
+    //tuple<int,string,string> *temp = searchForVillager(villagerStats, "Audie");
+    //displayVillagerStats(*temp);
 
-/*
+
     //Menu:
     while(true){
         int option;
@@ -43,12 +44,12 @@ int main() {
             displayAll(villagerStats);//display villagers
             string input;
             cin>>input;
-            tuple<int,string,string> *tempVillager = searchForVillager(villagerStats, input);
-            if(tempVillager==nullptr)//is it valid?
+            auto it = villagerStats.find(input);
+            if (it == villagerStats.end())
                 cout<<"Returning to Main Menu.\n";break;
             cout<<"Increase Friendship by how much ["<<MINFRIENDSHIP<<"-"<<MAXFRIENDSHIP<<"]: ";
             int value;
-            increaseFriendship(searchForVillager(villagerStats, input), value); //run it through the friendship increaser
+            increaseFriendship(it->second, value); //run it through the friendship increaser
             break;
         case 2:
             
@@ -59,7 +60,7 @@ int main() {
         default:
             break;
         }
-*/
+/**/
 /*
     // delete an element
     villagerStats.erase("Raymond");
@@ -69,6 +70,7 @@ int main() {
     villagerStats.clear();
     cout << "Size after clear: " << villagerStats.size() << endl;
 */
+    displayAll(villagerStats);
     return 0;
 }
 
@@ -85,7 +87,7 @@ void displayAll(map<string, tuple<int,string,string>> m){
         displayVillagerStats(pair.second);
     }
 }
-
+/*
 tuple<int,string,string> *searchForVillager(map<string, tuple<int,string,string>> m,string key){
     auto it = m.find(key);
     if (it != m.end()) {  // the iterator points to beyond the end of the map if key is not found
@@ -95,7 +97,7 @@ tuple<int,string,string> *searchForVillager(map<string, tuple<int,string,string>
     } else
         cout << endl << key << " not found." << endl;
         return nullptr;
-}
+}*/
 
 void increaseFriendship(tuple<int,string,string> &v, int val){//takes negative as well
     get<0>(v) += val;
