@@ -32,17 +32,36 @@ int main() {
     //Menu:
     while(true){
         int option;
-        cout<<"1. Increase Friendship\n";
-        cout<<"2. Decrease Friendship\n";
-        cout<<"3. Search for Villager\n";
-        cout<<"4. Exit\n";
+        cout<<"1. Add Villager\n";
+        cout<<"2. Delete Villager\n";
+        cout<<"3. Increase Friendship\n";
+        cout<<"4. Decrease Friendship\n";
+        cout<<"5. Search for Villager\n";
+        cout<<"6. Exit\n";
         cin>>option;
-        if(option == 4)
+        if(option == 6)
             break;
         switch (option){
-        case 1: //case 1 and 2 work the same way, but I use a ternary operator to make slight adjustments whether we are decreasing or increasing friendship.
-        case 2: {//Increase or decrease friendship
-            cout<<"Choose villager by name to " << string ((option == 1) ? "increase" : "decrease") << " their friendship.\n";   //prompt to choose villager by name
+        case 1:{
+            cout<<"Villager Name: ";
+            string name;
+            cin>>name;
+            cout<<"Friendship Level: ";
+            int friendship;
+            cin>>friendship;
+            cout<<"Species: ";
+            string species;
+            cin>>species;
+            cout<<"Catchphrase: ";
+            string catchphrase;
+            cin>>catchphrase;
+            tuple<int,string,string> v = {friendship, species, catchphrase};
+            villagerStats.insert(make_pair(name, v));
+            cout<< name <<" added."<<endl;
+        }
+        case 3: //case 1 and 2 work the same way, but I use a ternary operator to make slight adjustments whether we are decreasing or increasing friendship.
+        case 4: {//Increase or decrease friendship
+            cout<<"Choose villager by name to " << string ((option == 3) ? "increase" : "decrease") << " their friendship.\n";   //prompt to choose villager by name
             string input;
             cin>>input;
             input[0] = toupper(input[0]); //uppercase the first letter
@@ -51,11 +70,11 @@ int main() {
                 cout<<"Villager not found. Returning to Main Menu.\n";
                 break;
             }
-            cout<< it->first <<"'s current friendship is "<< get<0>(it->second)<<". "<< string ((option == 1) ? "Increase" : "Decrease") <<" friendship by how much ["<<MINFRIENDSHIP<<"-"<<MAXFRIENDSHIP<<"]: ";
+            cout<< it->first <<"'s current friendship is "<< get<0>(it->second)<<". "<< string ((option == 3) ? "Increase" : "Decrease") <<" friendship by how much ["<<MINFRIENDSHIP<<"-"<<MAXFRIENDSHIP<<"]: ";
             int value;
             cin>>value;
 
-            increaseFriendship(it->second, ((option == 1)? value: -value)); //run it through the friendship increaser, ternary operator for decrease or increase
+            increaseFriendship(it->second, ((option == 3)? value: -value)); //run it through the friendship increaser, ternary operator for decrease or increase
             cout<<input<<"'s friendship changed to "<<get<0>(it->second)<<endl;
             break; 
         }
