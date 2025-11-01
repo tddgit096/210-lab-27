@@ -42,17 +42,16 @@ int main() {
         switch (option){
         case 1: //case 1 and 2 work the same way, but I use a ternary operator to make slight adjustments whether we are decreasing or increasing friendship.
         case 2: {//Increase or decrease friendship
-            cout<<"Choose villager by name to " << string ((option == 1) ? "increase" : "decrease") << " their friendship\n";   //prompt to choose villager by name
-            displayAll(villagerStats);//display villagers
+            cout<<"Choose villager by name to " << string ((option == 1) ? "increase" : "decrease") << " their friendship.\n";   //prompt to choose villager by name
             string input;
             cin>>input;
             input[0] = toupper(input[0]); //uppercase the first letter
             auto it = villagerStats.find(input);
             if (it == villagerStats.end()){
-                cout<<"Returning to Main Menu.\n";
+                cout<<"Villager not found. Returning to Main Menu.\n";
                 break;
             }
-            cout<< string ((option == 1) ? "increase" : "decrease") <<" friendship by how much ["<<MINFRIENDSHIP<<"-"<<MAXFRIENDSHIP<<"]: ";
+            cout<< it->first <<"'s current friendship is "<< get<0>(it->second)<<". "<< string ((option == 1) ? "Increase" : "Decrease") <<" friendship by how much ["<<MINFRIENDSHIP<<"-"<<MAXFRIENDSHIP<<"]: ";
             int value;
             cin>>value;
 
@@ -61,7 +60,18 @@ int main() {
             break; 
         }
         case 3:{
-            cout<<"Enter villager to search by name: "
+            cout<<"Enter villager to search by name: "<<endl;
+            string input;
+            cin>>input;
+            input[0] = toupper(input[0]); //uppercase the first letter
+            auto it = villagerStats.find(input);
+            if (it == villagerStats.end()){
+                cout<<"Villager not found. Returning to Main Menu.\n";
+                break;
+            }
+            cout<<"Villager found\n";
+            cout<<it->first<<"[";
+            displayVillagerStats(it->second);
             break;
         }
         default:{
@@ -89,12 +99,14 @@ void displayVillagerStats(tuple<int,string,string> v){
 }
 
 void displayAll(map<string, tuple<int,string,string>> m){
+    cout<<"=======================================================\n";
     cout << "Villagers and their stats:" << endl;
     for (auto pair : m) {
         auto[friendship, species, phrase]=pair.second;
         cout << pair.first << " [";
         displayVillagerStats(pair.second);
     }
+    cout<<"=======================================================\n";
 }
 /*
 tuple<int,string,string> *searchForVillager(map<string, tuple<int,string,string>> m,string key){
