@@ -4,6 +4,7 @@
 #include <map>
 #include <vector>
 #include <tuple>
+#include <cctype>
 using namespace std;
 
 int MAXFRIENDSHIP = 10; int MINFRIENDSHIP = 0; int TOTALSTATS = 3;
@@ -39,12 +40,13 @@ int main() {
         if(option == 4)
             break;
         switch (option){
-        case 1:
+        case 1: //case 1 and 2 work the same way, but I use a ternary operator to make slight adjustments whether we are decreasing or increasing friendship.
         case 2: {//Increase or decrease friendship
             cout<<"Choose villager by name to " << string ((option == 1) ? "increase" : "decrease") << " their friendship\n";   //prompt to choose villager by name
             displayAll(villagerStats);//display villagers
             string input;
             cin>>input;
+            input[0] = toupper(input[0]); //uppercase the first letter
             auto it = villagerStats.find(input);
             if (it == villagerStats.end()){
                 cout<<"Returning to Main Menu.\n";
@@ -55,21 +57,18 @@ int main() {
             cin>>value;
 
             increaseFriendship(it->second, ((option == 1)? value: -value)); //run it through the friendship increaser, ternary operator for decrease or increase
-            displayVillagerStats(it->second);
-            break;
-        }
-        {
-            
-            break;
+            cout<<input<<"'s friendship changed to "<<get<0>(it->second)<<endl;
+            break; 
         }
         case 3:{
-            
+            cout<<"Enter villager to search by name: "
             break;
         }
         default:{
             break;
         }
-        } 
+        }
+    displayAll(villagerStats);
     } 
 /**/
 /*
@@ -81,7 +80,6 @@ int main() {
     villagerStats.clear();
     cout << "Size after clear: " << villagerStats.size() << endl;
 */
-    displayAll(villagerStats);
     return 0;
 }
 
